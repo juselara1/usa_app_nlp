@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sentan"
+version = "0.1.0"
+authors = [{name="Juan Lara", email="julara@unal.edu.co"}]
+requires-python = ">3.10"
+dependencies = [
+	"numpy", "pandas", "scikit-learn", "unidecode", "fastapi", "nltk", "uvicorn"
+]
+
+[project.optional-dependencies]
+dev = [
+	"jedi-language-server", "pytest", "mypy", "ruff",
+	"wheel"
+]
+
+[tool.setuptools.packages.find]
+where = ["src/"]

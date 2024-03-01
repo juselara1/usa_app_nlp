@@ -30,15 +30,19 @@ class JsonResponse(BaseModel):
 def get_json(name: str) -> JsonResponse:
     return {"name": name, "new_name": f"{name} Pablo"}
 
+class ApiInput(BaseModel):
+    text: str
+
 class ApiOutput(BaseModel):
     text: str
     prediction: str
     time: float
 
 @app.post("/model")
-def model_prediction(text: str) -> ApiOutput:
+def model_prediction(inp: ApiInput) -> ApiOutput:
     t0 = time.time()
     model = joblib.load("model.joblib")
+    text = inp.text
     prediction = str(model.predict([text]).flatten())
     delta_t = time.time() - t0
     return ApiOutput(

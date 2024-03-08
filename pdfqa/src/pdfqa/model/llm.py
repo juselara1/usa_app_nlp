@@ -1,3 +1,4 @@
+import re
 from abc import ABC, abstractmethod
 from enum import Enum
 from langchain_openai.chat_models import ChatOpenAI
@@ -7,7 +8,8 @@ from langchain.prompts import (
         SystemMessagePromptTemplate,
         HumanMessagePromptTemplate,
         MessagesPlaceholder,
-        ChatPromptTemplate
+        ChatPromptTemplate,
+        PromptTemplate
         )
 from langchain_core.prompts.base import BasePromptTemplate
 from langchain_core.language_models.chat_models import BaseChatModel
@@ -60,6 +62,7 @@ class OpenAIConfig(BaseModel):
 class OpenAIChainBuilder(AbstractChainBuilder):
     def __init__(self, config: OpenAIConfig):
         self.config = config
+        self.clean_pat = re.compile(r"[{}]")
 
     def get_model(self) -> BaseChatModel:
         return ChatOpenAI(
@@ -70,7 +73,9 @@ class OpenAIChainBuilder(AbstractChainBuilder):
 
     def get_prompt(self) -> BasePromptTemplate:
         return ChatPromptTemplate.from_messages([
-            SystemMessagePromptTemplate.from_template(self.config.system_prompt),
+            SystemMessagePromptTemplate.from_template(
+                re.sub(self.clean_pat, " ", self.config.system_prompt),
+            ),
             MessagesPlaceholder(variable_name="history"),
             HumanMessagePromptTemplate.from_template("{message}")
             ])

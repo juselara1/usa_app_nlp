@@ -1,7 +1,14 @@
 import streamlit as st
 from pdfqa.app.base import AbstractComponent
 
-class ExampleComponent(AbstractComponent):
+class ChatInfo(AbstractComponent):
     def call(self) -> bool:
-        st.write("Example")
+        st.markdown(
+                """
+                # Chat with Your Pdf
+                ---
+
+                Start asking questions about your uploaded document and a LLM will provide you answers.
+                """
+                )
         return False

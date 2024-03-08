@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  test:
+    build:
+      context: .
+      dockerfile: images/test/Dockerfile
+    container_name: ragqa_test
+    stdin_open: true
+    tty: true
+    ports:
+      - "8001:8000"
+    networks:
+      - net
+    volumes:
+      - .:/app
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+  app:
+    build:
+      context: .
+      dockerfile: images/app/Dockerfile
+    container_name: ragqa_app
+    ports:
+      - "8000:8000"
+    networks:
+      - net
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+  chroma:
+    build:
+      context: .
+      dockerfile: images/chroma/Dockerfile
+    container_name: ragqa_chroma
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge

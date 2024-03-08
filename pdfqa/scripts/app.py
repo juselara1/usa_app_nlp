@@ -2,9 +2,9 @@ import streamlit as st
 from pdfqa.app.base import ListComponent, PageComponent
 from pdfqa.app.header import HeaderComponent
 from pdfqa.app.session import StateInitializer
-from pdfqa.app.load import PdfLoader
-from pdfqa.app.chat import DocumentValidator
-from pdfqa.app.text import ExampleComponent
+from pdfqa.app.load import ConfigLoader
+from pdfqa.app.chat import DocumentValidator, ChatComponent, ParametersViewer
+from pdfqa.app.text import ChatInfo
 
 def main() -> int:
     header = ListComponent().set_components([
@@ -12,11 +12,13 @@ def main() -> int:
         StateInitializer()
         ])
     sidebar = ListComponent().set_components([
-        PdfLoader()
+        ConfigLoader()
         ])
     content = ListComponent().set_components([
         DocumentValidator(),
-        ExampleComponent()
+        ChatInfo(),
+        ParametersViewer(),
+        ChatComponent()
     ])
 
     page = PageComponent().set_elements(

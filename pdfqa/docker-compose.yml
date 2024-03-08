@@ -1,9 +1,25 @@
 version: "3.9"
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: images/app/Dockerfile
     container_name: pdfqa
     ports:
       - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+  devapp:
+    build:
+      context: .
+      dockerfile: images/devapp/Dockerfile
+    container_name: pdfqa_dev
+    ports:
+      - "8001:8000"
+    volumes:
+      - "./:/app/"
+    stdin_open: true
+    tty: true
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}

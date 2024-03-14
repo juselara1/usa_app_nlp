@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: images/dev/Dockerfile
+    container_name: app_dev
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/app
+    networks:
+      - net
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+  chroma:
+    build:
+      context: .
+      dockerfile: images/chroma/Dockerfile
+    container_name: chroma
+    networks:
+      - net
+
+networks:
+  net: 
+    driver: bridge

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smry"
+version = "0.1.0"
+authors = [{name="Juan Lara", email="julara@unal.edu.co"}]
+requires-python = ">3.10"
+dependencies = [
+	"streamlit", "langchain", "langchain_openai", "chromadb",
+	"scikit-learn", "playwright", "unstructured"
+]
+
+[project.optional-dependencies]
+dev = [
+	"jedi-language-server", "ipython"
+]
+
+[tool.setuptools.packages.find]
+where = ["src/"]

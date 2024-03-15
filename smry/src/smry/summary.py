@@ -5,6 +5,7 @@ from typing import List, Self, Literal, Generic, TypeVar
 from pydantic import BaseModel, PositiveInt
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
+from langchain_core.runnables import Runnable
 from langchain_community.vectorstores.chroma import Chroma
 
 ZeroPositive = PositiveInt | Literal[0]
@@ -67,4 +68,29 @@ class ExtractiveSummarizer(AbstractSummarizer[ExtractiveSummaryConfig]):
                         k=1
                         )[0]
                     )
-        return "\n".join(doc.page_content for doc in relevant_docs)
+        return "\n- ".join(doc.page_content for doc in relevant_docs)
+
+class DefaultSummarizer(AbstractSummarizer[BaseSummaryConfig], ABC):
+    chain: Runnable
+
+    def set_chain(self, chain: Runnable) -> Self:
+        self.chain = chain
+        return self
+
+    def summarize(self, document: Document) -> str:
+        chunks = self.get_chunks(document)
+        response = self.chain.invoke({"context": chunks})["output_text"]
+        return response
+
+class RagSummarizer(ExtractiveSummarizer):
+    chain: Runnable
+
+    def set_chain(self, chain: Runnable) -> Self:
+        self.chain = chain
+        return self
+
+    def summarize(self, document: Document) -> str:
+        relevant_chunks = super().summarize(document)
+        chunks = [Document(page_content=chunk) for chunk in relevant_chunks.split("\n- ")]
+        response = self.chain.invoke({"context": chunks})["output_text"]
+        return response

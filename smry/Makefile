@@ -10,6 +10,9 @@ install-playwright:
 	playwright install-deps
 	playwright install
 
+generate-ssl:
+	openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
+
 update:
 	pip install . --no-dependencies
 

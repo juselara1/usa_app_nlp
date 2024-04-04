@@ -1,0 +1,9 @@
+[theme]
+base = "dark"
+backgroundColor = "#606060"
+
+[server]
+port = 8000
+address = "0.0.0.0"
+sslCertFile = "/app/cert.pem"
+sslKeyFile = "/app/key.pem"

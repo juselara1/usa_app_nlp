@@ -9,7 +9,7 @@ authors = [{name="Juan Lara", email="julara@unal.edu.co"}]
 requires-python = ">3.10"
 dependencies = [
 	"streamlit", "langchain", "langchain_openai", "chromadb",
-	"scikit-learn", "playwright", "unstructured"
+	"scikit-learn", "playwright", "unstructured", "pymupdf"
 ]
 
 [project.optional-dependencies]

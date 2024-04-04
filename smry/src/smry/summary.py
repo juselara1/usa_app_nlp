@@ -1,12 +1,21 @@
 import numpy as np
-from sklearn.cluster import KMeans
+from enum import StrEnum, auto
 from abc import ABC, abstractmethod
+from sklearn.cluster import KMeans
 from typing import List, Self, Literal, Generic, TypeVar
 from pydantic import BaseModel, PositiveInt
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain_core.runnables import Runnable
 from langchain_community.vectorstores.chroma import Chroma
+
+
+class SummaryEnum(StrEnum):
+    EXTRACTIVE = auto()
+    RAG = auto()
+    STUFF = auto()
+    MAP_REDUCE = auto()
+    REFINE = auto()
 
 ZeroPositive = PositiveInt | Literal[0]
 class BaseSummaryConfig(BaseModel):

@@ -1,0 +1,50 @@
+.welcome-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	height: 400px;
+}
+
+.welcome-container h1 {
+	text-align: center;
+	font-size: 80px;
+}
+
+
+.welcome-description {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.welcome-description p {
+	text-align: center;
+	font-size: 25px;
+}
+
+.text-gradient p {
+	background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(102, 178, 255) 100%);
+	-webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
+}
+
+.summary-container {
+	border: 1px solid #c3c3c3;
+	border-radius: 20px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #404040;
+}
+
+.summary-container h1 {
+	text-align: center;
+}
+
+.summary-container 4 {
+	text-align: justify;
+}
